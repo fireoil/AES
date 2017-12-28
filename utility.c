@@ -240,3 +240,35 @@ void convert_to_int_array(char *str, int array[4][4])
     }
 }
 
+/** \brief        add the array and the round key
+ *
+ * \param          array[4][4]------the array will be added the round key
+ * \param          w------the expanded key
+ *
+ */
+void add_round_key(int array[4][4], int round, char *w)
+{
+    int warray[4];
+    int i,j;
+    for (i=0; i<4; i++)
+    {
+        splitIntToArray(w[round*4 + i], warray);
+        for (j=0; j<4; j++)
+        {
+            array[j][i] = array[j][i] ^ warray[j];
+        }
+    }
+}
+
+/**
+ * 把4X4数组转回字符串
+ */
+void convert_array_to_string(int array[4][4], char *str)
+{
+    int i,j;
+    for(i = 0; i < 4; i++)
+        for(j = 0; j < 4; j++)
+        {
+            *str++ = (char)array[j][i];
+        }
+}

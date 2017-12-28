@@ -44,31 +44,13 @@ int encrypt_date(char *in, char *out, char *encrypt_key)
         sub_bytes(array);
         shift_rows(array);
         add_round_key(array, round_num, w);
+        convert_array_to_string(array, out);
     }
 
     free(w);
     return 0;
 }
 
-/** \brief        add the array and the round key
- *
- * \param          array[4][4]------the array will be added the round key
- * \param          w------the expanded key
- *
- */
-static void add_round_key(int array[4][4], int round, char *w)
-{
-    int warray[4];
-    int i,j;
-    for (i=0; i<4; i++)
-    {
-        splitIntToArray(w[round*4 + i], warray);
-        for (j=0; j<4; j++)
-        {
-            array[j][i] = array[j][i] ^ warray[j];
-        }
-    }
-}
 
 /** \brief   ×Ö½Ú´ú»»
  *

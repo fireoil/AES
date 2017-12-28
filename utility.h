@@ -92,5 +92,6 @@ void leftLoop4int(int array[4], int step);
 int getNumFromSBox(int index);
 int mergeArrayToInt(int array[4]);
 void convert_to_int_array(char *str, int array[4][4]);
-void convert_array_to_string(char array[4][4], char *str);
+void convert_array_to_string(int array[4][4], char *str);
+void add_round_key(int array[4][4], int round, char *w);
 #endif // UTILITY_H_INCLUDED

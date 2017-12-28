@@ -33,7 +33,7 @@ int decrypt_date(char *in, char *out, char *decrypt_key)
     for (i=0; i<strlen(in); i++)
     {
         convert_to_int_array(in+i, array);
-        add_round_key(array, round_num);
+        add_round_key(array, round_num, w);
         for(j=round_num-1; j>=1; j--)
         {
             de_sub_bytes(array);

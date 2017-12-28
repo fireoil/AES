@@ -4,7 +4,7 @@
 #include "utility.h"
 
 int encrypt_date(char *in, char *out, char *encrypt_key);
-static void add_round_key(int array[4][4], int round, char *w);
+
 static void sub_bytes(int array[4][4]);
 static void shift_rows(int array[4][4]);
 static void mix_columns(int array[4][4]);
