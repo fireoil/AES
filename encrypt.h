@@ -1,5 +1,7 @@
 #ifndef ENCRYPT_H_INCLUDED
 #define ENCRYPT_H_INCLUDED
+
+#include "utility.h"
 /**
  * SºÐ
  */
@@ -45,7 +47,6 @@ int encrypt_date(char *in, char *out, char *encrypt_key);
 static void extend_key(char *key, char *w);
 static void leftLoop4int(int array[4], int step);
 static int T(int num, int round);
-static void splitIntToArray(int num, int array[4]);
 static int getNumFromSBox(int index);
 static int mergeArrayToInt(int array[4]);
 static int getLeft4Bit(int num);
