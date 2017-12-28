@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1514287041 source:e:\projects\cb_projects\aes_diy\main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdint.h>
+
