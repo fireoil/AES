@@ -456,4 +456,10 @@ static int GF_mul2(int s)
     int result = s << 1;
     int a7 = result & 0x00000100;
 
+    if (a7 != 0)
+    {
+        result = result & 0x000000ff;
+        result = result ^ 0x1b;
+    }
+    return result;
 }
