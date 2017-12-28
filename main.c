@@ -1,22 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+
+#include "encrypt.h"
+#include "decrypt.h"
 // I will do myself to implement the AES algorithm
 // I used many chinese language in code, sorry!
 // Because I am a chinese. I love my country.
 
 #define     NAME_LENGTH         65535
-
-/**
- * 常量轮值表
- */
-static const int Rcon[10] = { 0x01000000, 0x02000000,
-                              0x04000000, 0x08000000,
-                              0x10000000, 0x20000000,
-                              0x40000000, 0x80000000,
-                              0x1b000000, 0x36000000
-                            };
-
 
 /**
  * 逆S盒
