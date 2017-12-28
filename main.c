@@ -95,6 +95,7 @@ static int getRight4Bit(int num);
 static int get_int_from_char(char c);
 static int get_word_from_str(char *str);
 static void convert_to_int_array(char *str, int array[4][4]);
+static void convert_array_to_string(char array[4][4], char *str);
 static void add_round_key(int array[4][4], int round, char *w);
 static void sub_bytes(int array[4][4]);
 static void shift_rows(int array[4][4]);
@@ -214,8 +215,13 @@ int encrypt_date(char *in, char *out, char *encrypt_key)
         {
             sub_bytes(array);
             shift_rows(array);
-
+            mix_columns(array);
+            add_round_key(array, j, w);
         }
+        sub_bytes(array);
+        shift_rows(array);
+        add_round_key(array, round_num, w);
+
     }
 
     free(w);
@@ -457,7 +463,13 @@ static void mix_columns(int array[4][4])
         }
     }
 
-
+    for (i=0; i<4; i++)
+    {
+        for (j=0; j<4; j++)
+        {
+            array[i][j] = GF_mul(COL_MIX[i][0], temp[0][j]) ^ GF_mul(COL_MIX[i][1], temp[1][j]) ^ GF_mul(COL_MIX[i][2], temp[2][j]) ^ GF_mul(COL_MIX[i][3], temp[3][j]);
+        }
+    }
 }
 
 static int GF_mul(int n, int s)
