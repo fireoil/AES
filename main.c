@@ -100,6 +100,7 @@ static void sub_bytes(int array[4][4]);
 static void shift_rows(int array[4][4]);
 static void mix_columns(int array[4][4]);
 static int GF_mul2(int s);
+static int GF_mul3(int s);
 
 
 
@@ -462,4 +463,9 @@ static int GF_mul2(int s)
         result = result ^ 0x1b;
     }
     return result;
+}
+
+static int GF_mul3(int s)
+{
+    return  GF_mul2(s)^s;
 }
