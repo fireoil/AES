@@ -99,8 +99,16 @@ static void add_round_key(int array[4][4], int round, char *w);
 static void sub_bytes(int array[4][4]);
 static void shift_rows(int array[4][4]);
 static void mix_columns(int array[4][4]);
+static int GF_mul(int n, int s);
 static int GF_mul2(int s);
 static int GF_mul3(int s);
+static int GF_mul4(int s);
+static int GF_mul8(int s);
+static int GF_mul9(int s);
+static int GF_mul11(int s);
+static int GF_mul12(int s);
+static int GF_mul13(int s);
+static int GF_mul14(int s);
 
 
 
@@ -452,6 +460,42 @@ static void mix_columns(int array[4][4])
 
 }
 
+static int GF_mul(int n, int s)
+{
+    int result;
+    switch(n)
+    {
+    case 1:
+        result = s;
+        break;
+    case 2:
+        result = GF_mul12(s);
+        break;
+    case 3:
+        result = GF_mul13(s);
+        break;
+    case 4:
+        result = GF_mul4(s);
+        break;
+    case 0x9:
+        result = GF_mul9(s);
+        break;
+    case 0xb:
+        result = GF_mul11(s);
+        break;
+    case 0xd:
+        result = GF_mul13(s);
+        break;
+    case 0xe:
+        result = GF_mul14(s);
+        break;
+    default:
+        break;
+    }
+
+    return result;
+}
+
 static int GF_mul2(int s)
 {
     int result = s << 1;
@@ -468,4 +512,39 @@ static int GF_mul2(int s)
 static int GF_mul3(int s)
 {
     return  GF_mul2(s)^s;
+}
+
+static int GF_mul4(int s)
+{
+    return GF_mul3(s)^s;
+}
+
+static int GF_mul8(int s)
+{
+    return GF_mul4(GF_mul4(s));
+}
+
+static int GF_mul9(int s)
+{
+    return GF_mul8(s)^s;
+}
+
+static int GF_mul11(int s)
+{
+    return GF_mul9(GF_mul2(s));
+}
+
+static int GF_mul12(int s)
+{
+    return GF_mul11(s) ^ s;
+}
+
+static int GF_mul13(int s)
+{
+    return GF_mul12(s)^s;
+}
+
+static int GF_mul14(int s)
+{
+    return GF_mul13(s) ^ s;
 }
