@@ -22,6 +22,7 @@ int read_key(char *keyfile, int *round_num, uint8_t *key, uint8_t *s_box, uint8_
 int main(int argc, char *argv[])
 {
     FILE *fp = NULL;
+    FILE *fp_w = NULL:
     char result[NAME_LENGTH] = "";
     char deal_string[8] = "";
     int c = 0;
@@ -47,18 +48,27 @@ int main(int argc, char *argv[])
     }
 
     strcpy(deal_string, argv[1]);
-    if(fp = fopen(argv[2], "r")) goto end;
+    if (fp = fopen(argv[2], "r")) goto end;
+    if (fp_w = fopen(result, "w")) goto end;
 
     if (strcmp(deal_string, "encrypt") == 0)
     {
         printf("encrypt\n");
         /* encrypt */
+        while(feof(fp) != 0)
+        {
+
+        }
 
     }
     else if (strcmp(deal_string, "decrypt") == 0)
     {
         printf("decrypt\n");
         /* decrypt */
+        while(feof(fp) != 0)
+        {
+
+        }
     }
     else
     {
