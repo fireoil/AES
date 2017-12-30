@@ -1,8 +1,10 @@
 # depslib dependency file v1.0
-1514634945 source:e:\projects\cb_projects\aes_diy\main.c
+1514638920 source:e:\projects\cb_projects\aes_diy\main.c
 	<stdio.h>
 	<stdlib.h>
 	<stdint.h>
+	<unistd.h>
+	<string.h>
 	"encrypt.h"
 	"decrypt.h"
 

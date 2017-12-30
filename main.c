@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
+#include <string.h>
 
 #include "encrypt.h"
 #include "decrypt.h"
@@ -31,11 +32,27 @@ int main(int argc, char *argv[])
     char deal_string[8] = "";
     int c = 0;
     char path_name[PATH_LENGTH];
-    getcwd(path_name, sizeof(path_name));
+    char path[PATH_LENGTH];
+    char path_r[PATH_LENGTH];
+    char path_w[PATH_LENGTH];
+
+    strcpy(path_name, argv[0]);
+    char *p = strrchr(path_name, '/');
+    int location = p - path_name;
+    strncpy(path, path_name, location);
+
+#if 0
+    path[location] = 0x00;
+    strcat(path, "/");
+    strcpy(path_r, path);
+    strcpy(path_w, path);
+
 
     argc = 3;
     argv[1] = "encrypt";
-    argv[2] = "E:\\projects\\CB_projects\\AES_DIY\\bin\\Debug\\hello";
+    //argv[2] = "E:\\projects\\CB_projects\\AES_DIY\\bin\\Debug\\hello";
+    argv[2] = "hello";
+
 
     if (argc == 1)
     {
@@ -59,12 +76,12 @@ int main(int argc, char *argv[])
         strcpy(result, argv[3]);
     }
 
-    strcat(path_name, "\\");
-    strcat(path_name, input);
+    strcat(path_r, input);
+    strcat(path_w, result);
 
-    if ((fp_r = fopen(argv[2], "r")) == NULL)
+    if ((fp_r = fopen(path_r, "r")) == NULL)
         goto end;
-    if ((fp_w = fopen(result, "w")) == NULL)
+    if ((fp_w = fopen(path_w, "w")) == NULL)
         goto end;
 
     strcpy(deal_string, argv[1]);
@@ -94,7 +111,7 @@ int main(int argc, char *argv[])
         printf("e.g.   AES    encrypt     file_name    result\n");
         printf("e.g.   AES    decrypt     file_name    result\n");
     }
-
+#endif
 end:
     fclose(fp_r);
     fclose(fp_w);
