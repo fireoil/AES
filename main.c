@@ -10,8 +10,8 @@
 // I used many chinese language in code, sorry!
 // Because I am a chinese. I love my country.
 
-#define     NAME_LENGTH         1024
-#define     PATH_LENGTH         1024
+#define     NAME_LENGTH         256
+#define     PATH_LENGTH         256
 
 int read_key(char *keyfile, char *key);
 static int get_file_length(FILE *fp);
@@ -35,14 +35,18 @@ int main(int argc, char *argv[])
     char path[PATH_LENGTH];
     char path_r[PATH_LENGTH];
     char path_w[PATH_LENGTH];
+    memset(path, 0, PATH_LENGTH);
+    memset(path_r, 0, PATH_LENGTH);
+    memset(path_w, 0, PATH_LENGTH);
+    int i;
 
     strcpy(path_name, argv[0]);
     char *p = strrchr(path_name, '/');
     int location = p - path_name;
-    strncpy(path, path_name, location);
+
+    snprintf(path, location+1, "%s", path_name);
 
 #if 0
-    path[location] = 0x00;
     strcat(path, "/");
     strcpy(path_r, path);
     strcpy(path_w, path);
