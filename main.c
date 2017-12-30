@@ -11,6 +11,7 @@
 #define     NAME_LENGTH         65535
 
 int read_key(char *keyfile, int *round_num, uint8_t *key, uint8_t *s_box, uint8_t *inv_s_box);
+static int get_file_length(FILE *fp);
 
 /** \brief      主函数，根据输入的命令来加密或解密数据
  *
@@ -21,8 +22,8 @@ int read_key(char *keyfile, int *round_num, uint8_t *key, uint8_t *s_box, uint8_
  */
 int main(int argc, char *argv[])
 {
-    FILE *fp = NULL;
-    FILE *fp_w = NULL:
+    FILE *fp_r = NULL;
+    FILE *fp_w = NULL;
     char result[NAME_LENGTH] = "";
     char deal_string[8] = "";
     int c = 0;
@@ -48,27 +49,20 @@ int main(int argc, char *argv[])
     }
 
     strcpy(deal_string, argv[1]);
-    if (fp = fopen(argv[2], "r")) goto end;
+    if (fp_r = fopen(argv[2], "r")) goto end;
     if (fp_w = fopen(result, "w")) goto end;
 
     if (strcmp(deal_string, "encrypt") == 0)
     {
         printf("encrypt\n");
         /* encrypt */
-        while(feof(fp) != 0)
-        {
-
-        }
 
     }
     else if (strcmp(deal_string, "decrypt") == 0)
     {
         printf("decrypt\n");
         /* decrypt */
-        while(feof(fp) != 0)
-        {
 
-        }
     }
     else
     {
@@ -83,6 +77,16 @@ int main(int argc, char *argv[])
 
 
 end:
-    fclose(fp);
+    fclose(fp_r);
+    fclose(fp_w);
     return 0;
+}
+
+static int get_file_length(FILE *fp)
+{
+    char *pBuf;
+    fseek(fp, 0, SEEK_END);
+    int len = ftell(fp);
+    rewind(fp);
+    return len;
 }
