@@ -25,8 +25,8 @@ static int get_file_length(FILE *fp);
  */
 int main(int argc, char *argv[])
 {
-    FILE *fp_r = NULL;
-    FILE *fp_w = NULL;
+    FILE *fp_r;
+    FILE *fp_w;
     char input[NAME_LENGTH] = "";
     char result[NAME_LENGTH] = "";
     char deal_string[8] = "";
@@ -46,19 +46,17 @@ int main(int argc, char *argv[])
 
     snprintf(path, location+1, "%s", path_name);
 
-#if 0
     strcat(path, "/");
     strcpy(path_r, path);
     strcpy(path_w, path);
 
-
+#if 1
     argc = 3;
     argv[1] = "encrypt";
-    //argv[2] = "E:\\projects\\CB_projects\\AES_DIY\\bin\\Debug\\hello";
     argv[2] = "hello";
+#endif // 0
 
-
-    if (argc == 1)
+    if (argc < 3)
     {
         printf("please input the file which will be encrypted!\n");
         printf("e.g.   AES    encrypt     file_name\n");
@@ -70,7 +68,7 @@ int main(int argc, char *argv[])
     }
     else if (argc == 3)
     {
-        strcpy(input, argv[2]);
+        snprintf(input, strlen(argv[2]) + 1, "%s", argv[2]);
         strcat(result, argv[2]);
         strcat(result, ".result");
     }
@@ -83,11 +81,11 @@ int main(int argc, char *argv[])
     strcat(path_r, input);
     strcat(path_w, result);
 
-    if ((fp_r = fopen(path_r, "r")) == NULL)
-        goto end;
-    if ((fp_w = fopen(path_w, "w")) == NULL)
-        goto end;
+    // the two command below catch a problem which is very strange.
 
+    if ((fp_r = fopen(path_r, "r")) == NULL || (fp_w = fopen(path_w, "w")) == NULL)
+        goto end;
+#if 0
     strcpy(deal_string, argv[1]);
 
     // get the string of input file
