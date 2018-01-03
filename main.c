@@ -25,20 +25,25 @@ static int get_file_length(FILE *fp);
  */
 int main(int argc, char *argv[])
 {
-    FILE *fp_r;
-    FILE *fp_w;
-    char input[NAME_LENGTH] = "";
-    char result[NAME_LENGTH] = "";
-    char deal_string[8] = "";
-    int c = 0;
+
+    FILE *fp_r = NULL;
+    FILE *fp_w = NULL;
+    char input[NAME_LENGTH];
+    char result[NAME_LENGTH];
+    char deal_string[8];
     char path_name[PATH_LENGTH];
     char path[PATH_LENGTH];
     char path_r[PATH_LENGTH];
     char path_w[PATH_LENGTH];
+
+    memset(input, 0, NAME_LENGTH);
+    memset(result, 0, NAME_LENGTH);
+    memset(deal_string, 0, 8);
+
+    memset(path_name, 0, PATH_LENGTH);
     memset(path, 0, PATH_LENGTH);
     memset(path_r, 0, PATH_LENGTH);
     memset(path_w, 0, PATH_LENGTH);
-    int i;
 
     strcpy(path_name, argv[0]);
     char *p = strrchr(path_name, '/');
@@ -54,6 +59,8 @@ int main(int argc, char *argv[])
     argc = 3;
     argv[1] = "encrypt";
     argv[2] = "hello";
+
+    char key[16] = "0123456789abcdef";
 #endif // 0
 
     if (argc < 3)
@@ -82,14 +89,21 @@ int main(int argc, char *argv[])
     strcat(path_w, result);
 
     // the two command below catch a problem which is very strange.
-
+#if 1
     if ((fp_r = fopen(path_r, "r")) == NULL || (fp_w = fopen(path_w, "w")) == NULL)
+    {
         goto end;
-#if 0
+    }
+#endif // 0
+#if 1
     strcpy(deal_string, argv[1]);
 
     // get the string of input file
     int len_r = get_file_length(fp_r);
+    if (len_r < 16)
+    {
+        goto end;
+    }
     // test the function of get_file_length
     printf("the file length is %d.\n", len_r);
 
@@ -97,7 +111,15 @@ int main(int argc, char *argv[])
     {
         printf("encrypt\n");
         /* encrypt */
+        //encrypt_date(char *in, char *out, char *encrypt_key);
+        int len_once_time = len_r;
+        while (len_r >= 0)
+        {
+            char buf[16];
+            read(fd_r, buf, 16);
 
+            len_r -= 16
+        }
     }
     else if (strcmp(deal_string, "decrypt") == 0)
     {
@@ -115,14 +137,15 @@ int main(int argc, char *argv[])
     }
 #endif
 end:
-    fclose(fp_r);
-    fclose(fp_w);
+    if (fp_r != NULL)
+        fclose(fp_r);
+    if (fp_w != NULL)
+        fclose(fp_w);
     return 0;
 }
 
 static int get_file_length(FILE *fp)
 {
-    char *pBuf;
     fseek(fp, 0, SEEK_END);
     int len = ftell(fp);
     rewind(fp);
